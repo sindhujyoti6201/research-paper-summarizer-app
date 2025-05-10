@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, AlertCircle, Clock, MessageSquare } from 'lucide-react';
 import { SUMMARIES_API_ENDPOINT, SEARCH_API_ENDPOINT } from '../constants';
+import AudioPlayer from './AudioPlayer';
 
 export default function SummariesSection({ navigateTo }) {
   const [summaries, setSummaries] = useState([]);
@@ -99,7 +100,8 @@ export default function SummariesSection({ navigateTo }) {
               <div className="text-gray-600 text-sm overflow-y-auto max-h-48 mb-4">
                 <p>{item.s}</p>
               </div>
-              <div className="flex justify-end">
+              <div className="flex justify-between items-center">
+                <AudioPlayer text={item.s} />
                 <button
                   onClick={() => navigateTo('qa', item)}
                   className="text-blue-500 hover:text-blue-700 text-sm flex items-center gap-1"

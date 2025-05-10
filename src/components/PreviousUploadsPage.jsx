@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, MessageSquare, BookOpen, ArrowLeft } from 'lucide-react';
 import { SUMMARIES_API_ENDPOINT } from '../constants';
+import AudioPlayer from './AudioPlayer';
 
 export default function PreviousUploadsPage({ navigateTo }) {
   const [papers, setPapers] = useState([]);
@@ -92,13 +93,16 @@ export default function PreviousUploadsPage({ navigateTo }) {
                 <span className="text-xs text-gray-500">
                   {new Date(parseInt(paper.s3_key.split('-')[0])).toLocaleDateString()}
                 </span>
-                <button
-                  onClick={() => navigateTo('qa', paper)}
-                  className="bg-blue-500 text-white text-sm px-3 py-1 rounded-md hover:bg-blue-600 flex items-center gap-1"
-                >
-                  <MessageSquare size={14} />
-                  Ask Questions
-                </button>
+                <div className="flex items-center gap-4">
+                  <AudioPlayer text={paper.s} />
+                  <button
+                    onClick={() => navigateTo('qa', paper)}
+                    className="bg-blue-500 text-white text-sm px-3 py-1 rounded-md hover:bg-blue-600 flex items-center gap-1"
+                  >
+                    <MessageSquare size={14} />
+                    Ask Questions
+                  </button>
+                </div>
               </div>
             </div>
           ))}
