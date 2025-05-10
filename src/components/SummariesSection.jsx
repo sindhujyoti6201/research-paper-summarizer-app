@@ -40,7 +40,12 @@ export default function SummariesSection({ navigateTo }) {
       .then(res => res.json())
       .then(data => {
         setStatus({ type: '', message: '' });
-        setSummaries(data.results || []);
+        setSummaries(
+          (data.results || []).map(item => ({
+              s3_key: item.s3_url,          // map to expected key
+              s: item.summary                // map to expected value
+          }))
+        );
       })
       .catch(() => setStatus({ type: 'error', message: 'Search failed. Try again.' }));
   };

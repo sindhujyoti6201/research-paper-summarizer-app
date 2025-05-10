@@ -20,7 +20,7 @@ export default function App() {
 
   return (
     <div
-      className="min-h-screen bg-background bg-cover bg-center"
+      className="min-h-screen bg-gray-50 bg-cover bg-center"
       style={{
         backgroundImage:
           "url('https://images.unsplash.com/photo-1581090700227-1e7b1c78f3c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80')",

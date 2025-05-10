@@ -17,7 +17,13 @@ export default function SearchSimilarPapersPage({ navigateTo }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        setResults(data.results || []);
+        const mappedResults = (data.results || []).map(item => ({
+          title: item.s3_url,  // You don't have title, so fallback to s3_url
+          authors: [],         // authors not present → set empty array
+          summary: item.summary,
+          paper_url: item.s3_url
+        }));
+        setResults(mappedResults);
         setIsLoading(false);
       })
       .catch(() => setIsLoading(false));
@@ -82,7 +88,7 @@ export default function SearchSimilarPapersPage({ navigateTo }) {
               <p className="text-gray-500 text-xs mb-1">
                 {paper.authors ? paper.authors.join(", ") : "Unknown authors"}
               </p>
-              <div className="text-gray-600 text-sm overflow-hidden max-h-32 mb-4">
+              <div className="text-gray-600 text-sm overflow-y-auto max-h-32 mb-4">
                 <p>{paper.summary}</p>
               </div>
               <a
