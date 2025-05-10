@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft } from 'lucide-react';
+import { CHAT_API_ENDPOINT } from '../constants';   // 👉 use your chat API
 
 export default function QAPage({ navigateTo, paper }) {
   const [question, setQuestion] = useState('');
@@ -7,39 +8,41 @@ export default function QAPage({ navigateTo, paper }) {
   const [isLoading, setIsLoading] = useState(false);
   const [currentPaper, setCurrentPaper] = useState(paper);
 
-  // Example mock answers for demo
-  const mockAnswers = [
-    {
-      question: "What is the main finding of this research?",
-      answer: "The paper concludes that neural networks can effectively identify complex patterns with 87% accuracy, outperforming traditional methods."
-    },
-    {
-      question: "What methodology was used?",
-      answer: "The researchers used a combination of deep learning and statistical validation across over 10,000 samples."
-    }
-  ];
-
   useEffect(() => {
-    // Set demo answers + set paper from props
-    setAnswers(mockAnswers);
-    if (paper) setCurrentPaper(paper);
+    // Reset answers when paper changes
+    if (paper) {
+      setCurrentPaper(paper);
+      setAnswers([]);
+    }
   }, [paper]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!question.trim()) return;
 
     setIsLoading(true);
 
-    setTimeout(() => {
+    try {
+      const response = await fetch(CHAT_API_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: question })     // 👈 send as 'query'
+      });
+      const data = await response.json();
+
+      const answerText = data.answer || "No answer found.";
       const newAnswer = {
         question: question,
-        answer: "This appears related to the novel technique described in Section 3.2, showing significant improvements compared to previous methods."
+        answer: answerText
       };
       setAnswers([newAnswer, ...answers]);
       setQuestion('');
+    } catch (err) {
+      console.error('❗ Error fetching answer:', err);
+      alert('Error calling chatbot. Try again.');
+    } finally {
       setIsLoading(false);
-    }, 1500); // Mock API delay
+    }
   };
 
   const extractFilename = (s3Key) => {
