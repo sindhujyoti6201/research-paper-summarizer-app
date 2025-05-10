@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Volume2, VolumeX, Loader2 } from 'lucide-react';
+import { Volume2, VolumeX, Loader2, Play, Pause } from 'lucide-react';
 import { TEXT_TO_SPEECH_API_ENDPOINT } from '../constants';
 
 export default function AudioPlayer({ text }) {
@@ -109,16 +109,15 @@ export default function AudioPlayer({ text }) {
       <button
         onClick={handlePlay}
         disabled={isLoading}
-        className="flex items-center gap-1 text-sm text-gray-600 hover:text-gray-800 transition-colors"
+        className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
       >
         {isLoading ? (
           <Loader2 className="animate-spin" size={16} />
         ) : isPlaying ? (
-          <Volume2 size={16} />
+          <Pause size={16} />
         ) : (
-          <VolumeX size={16} />
+          <Play size={16} />
         )}
-        {isLoading ? 'Generating...' : isPlaying ? 'Stop' : 'Listen'}
       </button>
       {error && (
         <span className="text-xs text-red-500">
