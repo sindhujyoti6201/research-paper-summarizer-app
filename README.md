@@ -6,13 +6,11 @@ A comprehensive web application that helps researchers, students, and academics 
 
 ### 📄 Paper Management
 - **Upload & Preview**: Upload research papers in PDF format with instant preview functionality
-- **Previous Uploads**: Access and manage your previously uploaded papers
-- **Paper Collections**: Organize papers into custom collections for better management
+- **Previous Uploads**: Access your previously uploaded papers
 
 ### 🔍 Smart Summarization
-- **AI-Powered Summaries**: Get concise, accurate summaries of research papers
+- **AI-Powered Summaries**: Get concise, accurate summaries of research papers in your email
 - **Audio Summaries**: Listen to paper summaries through text-to-speech functionality
-- **Multiple Summary Formats**: Choose between different summary lengths and formats
 
 ### 🤖 Interactive Features
 - **Q&A Interface**: Ask questions about specific papers and get AI-generated answers
@@ -23,11 +21,6 @@ A comprehensive web application that helps researchers, students, and academics 
 - **Responsive Design**: Seamless experience across desktop and mobile devices
 - **Modern UI**: Clean, intuitive interface built with Tailwind CSS
 - **Real-time Updates**: Instant feedback and updates as you interact with the app
-
-### 🔄 Integration Features
-- **AWS Lambda Integration**: Cloud-based processing for audio generation
-- **PDF Processing**: Advanced PDF parsing and text extraction
-- **Search Optimization**: Efficient paper search and retrieval system
 
 ## Getting Started
 
