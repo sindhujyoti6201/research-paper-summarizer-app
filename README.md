@@ -1,7 +1,8 @@
 # Research Paper Summarizer App
 
-https://youtu.be/c5f_wJfD-g0
-http://research-paper-summarisation.s3-website-us-east-1.amazonaws.com
+Video Link: https://youtu.be/eXXfsw-C9l4
+
+Demo: http://research-paper-summarisation.s3-website-us-east-1.amazonaws.com
 
 A comprehensive web application that helps researchers, students, and academics efficiently process and understand research papers through advanced summarization and analysis features.
 
