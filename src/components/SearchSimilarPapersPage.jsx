@@ -18,8 +18,8 @@ export default function SearchSimilarPapersPage({ navigateTo }) {
       .then((res) => res.json())
       .then((data) => {
         const mappedResults = (data.results || []).map(item => ({
-          title: item.s3_url,  // You don't have title, so fallback to s3_url
-          authors: [],         // authors not present → set empty array
+          title: item.s3_url,
+          authors: [],
           summary: item.summary,
           paper_url: item.s3_url
         }));

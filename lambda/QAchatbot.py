@@ -7,7 +7,7 @@ import urllib3
 
 REGION = "us-east-1"
 EMBED_MODEL_ID = "amazon.titan-embed-text-v2:0"
-GEN_MODEL_ID = "mistral.mistral-7b-instruct-v0:2"   # OR use llama model if preferred
+GEN_MODEL_ID = "mistral.mistral-7b-instruct-v0:2"
 OPENSEARCH_HOST = "https://search-vector-search-ysdsxdpfgxvffpewxvmjc3odya.us-east-1.es.amazonaws.com"
 INDEX_NAME = "research-papers"
 MIN_SCORE = 0.75
@@ -101,9 +101,7 @@ def lambda_handler(event, context):
             for h in hits if h.get("_score", 0) >= MIN_SCORE
         ]
 
-        # ----------------------
-        # ✅ GENERATIVE RESPONSE
-        # ----------------------
+
         context_text = "\n\n".join([f"{i+1}. {text}" for i, text in enumerate(top_summaries)])
         prompt = (
             f"You are a helpful assistant. Based on the following research paper summaries, "
@@ -126,7 +124,7 @@ def lambda_handler(event, context):
         }
 
     except Exception as e:
-        print(f"❗ Error: {str(e)}")
+        print(f"Error: {str(e)}")
         return {
             "statusCode": 500,
             "headers": headers,

@@ -21,7 +21,7 @@ export default function SummariesSection({ navigateTo }) {
     fetch(SUMMARIES_API_ENDPOINT)
       .then(res => res.json())
       .then(data => {
-        setSummaries(data);    // Directly use response as array
+        setSummaries(data);    
         setIsLoading(false);
       })
       .catch(() => setIsLoading(false));
@@ -42,8 +42,8 @@ export default function SummariesSection({ navigateTo }) {
         setStatus({ type: '', message: '' });
         setSummaries(
           (data.results || []).map(item => ({
-              s3_key: item.s3_url,          // map to expected key
-              s: item.summary                // map to expected value
+              s3_key: item.s3_url,          
+              s: item.summary                
           }))
         );
       })

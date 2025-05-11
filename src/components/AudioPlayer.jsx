@@ -36,7 +36,6 @@ export default function AudioPlayer({ text }) {
         throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
       }
       
-      // Get the base64-encoded audio data
       const base64Audio = await response.text();
       console.log('Base64 audio length:', base64Audio.length);
       
@@ -44,7 +43,6 @@ export default function AudioPlayer({ text }) {
         throw new Error('Received empty audio data');
       }
 
-      // Convert base64 to blob
       const byteCharacters = atob(base64Audio);
       const byteNumbers = new Array(byteCharacters.length);
       for (let i = 0; i < byteCharacters.length; i++) {
@@ -56,10 +54,8 @@ export default function AudioPlayer({ text }) {
       console.log('Audio blob size:', audioBlob.size);
       console.log('Audio blob type:', audioBlob.type);
 
-      // Create object URL
       const url = URL.createObjectURL(audioBlob);
       
-      // Test if the audio can be played
       const testAudio = new Audio();
       testAudio.src = url;
       
@@ -95,7 +91,6 @@ export default function AudioPlayer({ text }) {
     setIsPlaying(false);
   };
 
-  // Cleanup audio URL when component unmounts
   React.useEffect(() => {
     return () => {
       if (audioUrl) {

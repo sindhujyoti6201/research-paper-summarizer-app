@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft } from 'lucide-react';
-import { CHAT_API_ENDPOINT } from '../constants';   // 👉 use your chat API
+import { CHAT_API_ENDPOINT } from '../constants';
 
 export default function QAPage({ navigateTo, paper }) {
   const [question, setQuestion] = useState('');
@@ -9,7 +9,6 @@ export default function QAPage({ navigateTo, paper }) {
   const [currentPaper, setCurrentPaper] = useState(paper);
 
   useEffect(() => {
-    // Reset answers when paper changes
     if (paper) {
       setCurrentPaper(paper);
       setAnswers([]);
@@ -26,7 +25,7 @@ export default function QAPage({ navigateTo, paper }) {
       const response = await fetch(CHAT_API_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: question })     // 👈 send as 'query'
+        body: JSON.stringify({ query: question })
       });
       const data = await response.json();
 

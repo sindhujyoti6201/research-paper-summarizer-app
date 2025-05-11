@@ -6,7 +6,6 @@ export default function PaperCollections({ papers }) {
   const [newCollectionName, setNewCollectionName] = useState('');
   const [isAddingCollection, setIsAddingCollection] = useState(false);
 
-  // Load collections from localStorage on component mount
   useEffect(() => {
     const savedCollections = localStorage.getItem('paperCollections');
     if (savedCollections) {
@@ -14,7 +13,6 @@ export default function PaperCollections({ papers }) {
     }
   }, []);
 
-  // Save collections to localStorage whenever they change
   useEffect(() => {
     localStorage.setItem('paperCollections', JSON.stringify(collections));
   }, [collections]);
@@ -36,7 +34,6 @@ export default function PaperCollections({ papers }) {
   const addPaperToCollection = (collectionId, paper) => {
     setCollections(collections.map(collection => {
       if (collection.id === collectionId) {
-        // Check if paper already exists in collection
         if (!collection.papers.some(p => p.s3_key === paper.s3_key)) {
           return {
             ...collection,

@@ -3,7 +3,7 @@ import requests
 import xml.etree.ElementTree as ET
 
 def lambda_handler(event, context):
-    # ✅ 1. Handle OPTIONS preflight request
+    
     if event.get('httpMethod', '') == 'OPTIONS':
         return {
             'statusCode': 200,
@@ -15,7 +15,6 @@ def lambda_handler(event, context):
             'body': json.dumps({'message': 'CORS preflight successful'})
         }
 
-    # ✅ 2. Main logic for GET request
     query_url = "http://export.arxiv.org/api/query?search_query=all:machine+learning&start=0&max_results=5"
 
     try:

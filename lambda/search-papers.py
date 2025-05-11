@@ -5,18 +5,15 @@ import botocore.auth
 import botocore.awsrequest
 import urllib3
 
-# Constants
 REGION = "us-east-1"
 EMBED_MODEL_ID = "amazon.titan-embed-text-v2:0"
 OPENSEARCH_HOST = "https://search-vector-search-ysdsxdpfgxvffpewxvmjc3odya.us-east-1.es.amazonaws.com"
 INDEX_NAME = "research-papers"
-MIN_SCORE = 0.75  # Threshold for filtering poor matches
+MIN_SCORE = 0.75
 
-# Clients
 bedrock = boto3.client("bedrock-runtime", region_name=REGION)
 http = urllib3.PoolManager()
 
-# Get vector embedding from Bedrock
 def get_embedding(text):
     payload = {"inputText": text}
     response = bedrock.invoke_model(
@@ -27,7 +24,6 @@ def get_embedding(text):
     )
     return json.loads(response['body'].read())['embedding']
 
-# Sign OpenSearch request (IAM-based auth)
 def sign_request(method, url, body, service="es"):
     credentials = boto3.Session().get_credentials().get_frozen_credentials()
     request = botocore.awsrequest.AWSRequest(
@@ -43,10 +39,8 @@ def sign_request(method, url, body, service="es"):
     signer.add_auth(request)
     return request
 
-# Lambda Handler
 def lambda_handler(event, context):
-    print(f"🔍 Lambda Event: {event}")
-    # Handle CORS preflight request
+    print(f"Lambda Event: {event}")
     if event.get("httpMethod") == "OPTIONS":
         return {
             "statusCode": 200,
@@ -73,9 +67,9 @@ def lambda_handler(event, context):
                 "body": json.dumps({"error": "Missing 'query'"})
             }
 
-        print(f"🔍 Embedding query: {query}")
+        print(f"Embedding query: {query}")
         query_embedding = get_embedding(query)
-        print(f"🔍 Query embedding: {query_embedding}")
+        print(f"Query embedding: {query_embedding}")
 
         knn_query = {
             "size": 5,
@@ -96,7 +90,6 @@ def lambda_handler(event, context):
         search_response = json.loads(response.data.decode())
         hits = search_response.get("hits", {}).get("hits", [])
 
-        # Filter based on _score threshold
         filtered = [
             {
                 "paper_id": h["_source"].get("paper_id"),
@@ -117,7 +110,7 @@ def lambda_handler(event, context):
         }
 
     except Exception as e:
-        print(f"❗Search Lambda Error: {str(e)}")
+        print(f"Search Lambda Error: {str(e)}")
         return {
             "statusCode": 500,
             "headers": {

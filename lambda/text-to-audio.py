@@ -5,7 +5,7 @@ import base64
 polly = boto3.client('polly')
 
 def lambda_handler(event, context):
-    # CORS headers
+
     headers = {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
@@ -15,7 +15,6 @@ def lambda_handler(event, context):
         "Accept-Ranges": "bytes"
     }
 
-    # Handle OPTIONS request for CORS preflight
     if event['httpMethod'] == 'OPTIONS':
         return {
             "statusCode": 200,
@@ -24,7 +23,6 @@ def lambda_handler(event, context):
         }
 
     try:
-        # Parse text from query parameters
         text = ""
         if 'queryStringParameters' in event and event['queryStringParameters']:
             text = event['queryStringParameters'].get('text', '')
@@ -36,22 +34,19 @@ def lambda_handler(event, context):
                 "body": json.dumps({"error": "Missing 'text' parameter"})
             }
 
-        # Split text into smaller chunks if it's too long (Polly has a limit)
-        max_length = 3000  # Polly's limit is 3000 characters
+        max_length = 3000
         text_chunks = [text[i:i+max_length] for i in range(0, len(text), max_length)]
         
-        # Process each chunk
         audio_chunks = []
         for chunk in text_chunks:
             response = polly.synthesize_speech(
                 Text=chunk,
                 OutputFormat='mp3',
                 VoiceId='Joanna',
-                Engine='neural'  # Use neural engine for better quality
+                Engine='neural' 
             )
             audio_chunks.append(response['AudioStream'].read())
 
-        # Combine audio chunks
         combined_audio = b''.join(audio_chunks)
         encoded_audio = base64.b64encode(combined_audio).decode('utf-8')
 
@@ -63,7 +58,7 @@ def lambda_handler(event, context):
         }
 
     except Exception as e:
-        print(f"Error in Lambda: {str(e)}")  # This will show up in CloudWatch logs
+        print(f"Error in Lambda: {str(e)}")
         return {
             "statusCode": 500,
             "headers": headers,
