@@ -4,6 +4,8 @@ Video Link: https://youtu.be/eXXfsw-C9l4
 
 Demo: http://research-paper-summarisation.s3-website-us-east-1.amazonaws.com
 
+Paper: https://drive.google.com/file/d/1Rx-mP3_3QOg2waPEU9enOgVW-XTlWA4g/view?usp=sharing
+
 A comprehensive web application that helps researchers, students, and academics efficiently process and understand research papers through advanced summarization and analysis features.
 
 ## Key Features
